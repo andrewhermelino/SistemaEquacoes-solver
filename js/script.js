@@ -19,6 +19,16 @@ const atividades = {
         lastArray: [-89, 20, 13],
         solution: {x: 7, y: 18, z: -12}
     },
+    e: {
+        firstArray: [
+            [ 1,  1,  1],
+            [ 2, -1, -2],
+            [-1, -1, -5],
+        ],
+        middleArray: ["x", "y", "z"],
+        lastArray: [-9, -16, 17],
+        solution: {x: -9, y: 2, z: -2}
+    },
 }
 
 let detA = [
@@ -93,10 +103,10 @@ function get3x3ArrayDeterminant(paramArray){
     const firstStep_string = `(${putInsideParenteses(firstStep_logic.a)}*${putInsideParenteses(firstStep_logic.b)}*${putInsideParenteses(firstStep_logic.c)} + ${putInsideParenteses(firstStep_logic.d)}*${putInsideParenteses(firstStep_logic.e)}*${putInsideParenteses(firstStep_logic.f)} + ${putInsideParenteses(firstStep_logic.g)}*${putInsideParenteses(firstStep_logic.h)}*${putInsideParenteses(firstStep_logic.i)}) - (${putInsideParenteses(firstStep_logic.j)}*${putInsideParenteses(firstStep_logic.k)}*${putInsideParenteses(firstStep_logic.l)} + ${putInsideParenteses(firstStep_logic.m)}*${putInsideParenteses(firstStep_logic.n)}*${putInsideParenteses(firstStep_logic.o)} + ${putInsideParenteses(firstStep_logic.p)}*${putInsideParenteses(firstStep_logic.q)}*${putInsideParenteses(firstStep_logic.r)})`
 
     // (a + b + c) - (d + e + f)
-    const secondStep_string = `(${secondStep_logic.a} + ${secondStep_logic.b} + ${secondStep_logic.c}) - (${secondStep_logic.d} + ${secondStep_logic.e} + ${secondStep_logic.f})`
+    const secondStep_string = `(${secondStep_logic.a} + ${secondStep_logic.b} + ${secondStep_logic.c}) - (${secondStep_logic.d} + ${secondStep_logic.e} + ${secondStep_logic.f})`.replace("+ -", "- ")
 
     // a - b
-    const thirdStep_string = `${thirdStep_logic.a} - ${thirdStep_logic.b}`
+    const thirdStep_string = `${thirdStep_logic.a} - ${putInsideParenteses(thirdStep_logic.b)}`
 
     const result_string = ""+result_logic
 
@@ -117,4 +127,16 @@ function get3x3ArrayDeterminant(paramArray){
     }
 }
 
-console.log(get3x3ArrayDeterminant(atividades.b.firstArray))
+function replaceArrayColumn(firstArray, lastArray, variable){
+    const newArray = firstArray
+    
+    const column = variable == "x" ? 0 : variable == "y" ? 1 : 2
+    
+    for(let i = 0; i <= 2; i++){
+        newArray[i][column] = lastArray[i]
+    }
+
+    return newArray
+}
+
+console.log(replaceArrayColumn(atividades.b.firstArray, atividades.b.lastArray, "x"))
