@@ -139,4 +139,58 @@ function replaceArrayColumn(firstArray, lastArray, variable){
     return newArray
 }
 
-console.log(replaceArrayColumn(atividades.b.firstArray, atividades.b.lastArray, "x"))
+function isNumber(param){
+    let isNumber = true
+    for(char in param){
+        if(param[char] != "0" && param[char] != "1" && param[char] != "2" && param[char] != "3" && param[char] != "4" && param[char] != "5" && param[char] != "6" && param[char] != "7" && param[char] != "8" && param[char] != "9"){
+            isNumber = false
+        }
+    }
+
+    return isNumber
+}
+
+function extractOnlyNumber(param){
+    let number = ""
+    for(char in param){
+        const currentChar = param[char]
+        if(isNumber(currentChar)){
+            number += currentChar
+        }
+    }
+    return number
+}
+
+function explodeEquation(equation){
+
+    const equationArray = []
+    let currentPart = ""
+    for(letter in equation){
+        if(equation[letter] == "+" || equation[letter] == "-"){
+            equationArray.push(currentPart)
+            currentPart = equation[letter]
+        } else if(equation[letter] != "=") {
+            currentPart += equation[letter]
+        }
+    }
+    equationArray.push(currentPart)
+
+    const equationObject = {
+        x: {
+            positive: equationArray[0][0] == "-" ? false : equationArray[0][0] == "+" ? true : isNumber(equationArray[0][0]) ? true : false,
+            module: extractOnlyNumber(equationArray[0])
+        },
+        y: {
+            positive: equationArray[1][0] == "-" ? false : equationArray[1][0] == "+" ? true : isNumber(equationArray[1][0]) ? true : false,
+            module: extractOnlyNumber(equationArray[1])
+        },
+        z: {
+            positive: equationArray[2][0] == "-" ? false : equationArray[2][0] == "+" ? true : isNumber(equationArray[2][0]) ? true : false,
+            module: extractOnlyNumber(equationArray[2])
+        },
+        result: equationArray[3]
+    }
+
+    console.log(equationObject)
+}
+explodeEquation("2x+3y-1z=-4")
